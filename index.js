@@ -125,9 +125,9 @@ function insertMixin(helpers, mixins, rule, opts) {
   let rest = rule.params.slice(name.length).trim()
 
   if (name.includes('(')) {
-    throw rule.error(
-      'Remove brackets from mixin. Like: @mixin name(1px) → @mixin name 1px'
-    )
+    // Allow params to be between parenthesis
+    name = rule.params.split(/\(/, 1)[0];
+    rest = rule.params.match(/(?<=\().*(?=\))/)[0];
   }
 
   let params
